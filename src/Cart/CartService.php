@@ -52,7 +52,7 @@ class CartService
         }
 
         $cart[$id]++;
-
+        
         // 6. Enregistrer le tableau mis à jour dans la session
         $this->saveCart($cart);
     }
@@ -97,6 +97,9 @@ class CartService
         return $total;
     }
 
+    /**
+     * @return CartItem[]
+     */
     public function getDetailedCartItems(): array
     {
         $detailedCart = [];
@@ -117,5 +120,10 @@ class CartService
         }
 
         return $detailedCart;
+    }
+
+    public function empty()
+    {
+        $this->saveCart([]);
     }
 }
