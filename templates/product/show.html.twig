@@ -21,7 +21,12 @@
 		({{ product.price | amount }})</h1>
 	<div class="row">
 		<div class="col-md-4">
-			<img class="img-fluid" src="{{ product.mainPicture }}" alt="Image de {{ product.name }}">
+			{# <img class="img-fluid" src="{{ product.mainPicture }}" alt="Image de {{ product.name }}"> #}
+			{% if not product.imageName is empty %}
+				<img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid" alt="{{ product.name }}">
+			{% else %}
+				<img src="{{ asset('assets/img/default-image.jpg') }}" class="img-fluid" alt="Default Image">
+			{% endif %}
 		</div>
 		<div class="col">
 			<span class="badge bg-primary">
