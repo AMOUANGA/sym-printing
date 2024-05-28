@@ -1,3 +1,4 @@
+<div class= "container">
 <div class="card mb-3 me-2">
 	{# <img src="{{ p.mainPicture }}" class="img-fluid" alt="Image du produit"> #}
 	{% if not p.imageName is empty %}
@@ -15,4 +16,5 @@
 		<a href="{{ path('product_show', {'category_slug': p.category.slug, 'slug': p.slug}) }}" class="btn btn-primary btn-sm">Détails</a>
 		<a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter</a>
 	</div>
+</div>
 </div>
