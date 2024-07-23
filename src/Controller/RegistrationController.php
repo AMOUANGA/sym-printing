@@ -23,10 +23,10 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Transform firstName and LastName
+            // Transformer prénom et nom de famille
             $user->setFirstname(ucfirst($form->get('firstname')->getData()))
                 ->setLastname(mb_strtoupper($form->get('lastname')->getData()));
-            // encode the plain password
+            // encoder le mot de passe simple
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,

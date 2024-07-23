@@ -4,45 +4,38 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class RegistrationFormType extends AbstractType
+class UpdatePasswordUserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'label' => 'Votre email :',
+            ->add('oldPassword', PasswordType::class, [
+                'label' => 'Votre mot de passe actuel',
                 'label_attr' => [
                     'class' => 'lh-label fw-medium'
                 ],
+                'mapped' => false,
                 'required' => true,
                 'attr' => [
-                    'placeholder' => 'Merci de saisir votre adresse email'
+                    'placeholder' => 'Mot de passe actuel'
                 ],
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter les conditions d\utilisation',
-                    ]),
-                ],
+                    new UserPassword([
+                        'message' => 'Mauvaise valeur pour votre mot de passe'
+                    ])
+                ]
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('newPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
-                'invalid_message' => 'Le mot de passe et la confirmation doivent être identiques',
+                'invalid_message' => 'Le mot de passe et la confirmation du mot de passe ne sont pas identiques',
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
@@ -72,24 +65,6 @@ class RegistrationFormType extends AbstractType
                         'placeholder' => 'Merci de confirmer votre mot de passe'
                     ]
                 ]
-            ])
-            ->add('firstname', TextType::class, [
-                'label' => 'Votre prénom :',
-                'label_attr' => [
-                    'class' => 'lh-label fw-medium'
-                ],
-                'attr' => [
-                    'placeholder' => 'Merci de saisir votre prénom'
-                ],
-            ])
-            ->add('lastname', TextType::class, [
-                'label' => 'Votre nom :',
-                'label_attr' => [
-                    'class' => 'lh-label fw-medium'
-                ],
-                'attr' => [
-                    'placeholder' => 'Merci de saisir votre nom'
-                ],
             ])
         ;
     }
